@@ -1,0 +1,255 @@
+﻿<Window x:Class="ZooManager.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views="clr-namespace:ZooManager.Views"
+        mc:Ignorable="d"
+        Title="Zoo Manager" Height="456" Width="794" Closing="Window_Closing">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Overview">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Workers hired:" HorizontalAlignment="Left" Margin="401,288,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Label Content="Animal species in Zoo:" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Label Content="Animals in Zoo:" HorizontalAlignment="Left" Margin="10,246,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Label Content="Attractions avaiable:" Margin="401,204,0,0" FontSize="20" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Label Content="Places in Zoo:" HorizontalAlignment="Left" Margin="401,246,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Label Content="Total KG of food:" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Image Height="165" Margin="10,10,0,0" Width="760" VerticalAlignment="Top" Source="/ZooManager;component/Images/logo.png"/>
+                    <Label x:Name="labelAnimalSpeciesCount" Content="0" HorizontalAlignment="Left" Margin="235,208,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="labelAnimalsCount" Content="0" HorizontalAlignment="Left" Margin="235,250,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="labelWorkersCount" Content="0" HorizontalAlignment="Left" Margin="608,292,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="labelAttractionsCount" Content="0" HorizontalAlignment="Left" Margin="608,208,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="labelPlacesCount" Content="0" HorizontalAlignment="Left" Margin="608,250,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="labelFoodsCount" Content="0" HorizontalAlignment="Left" Margin="235,292,0,0" VerticalAlignment="Top" FontSize="16"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Animals">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="dataGridAnimals" Margin="10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="DataGridAnimals_SelectionChanged" MouseLeftButtonUp="DataGridAnimals_MouseLeftButtonUp">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Animal" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Count}" Header="Count" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding MaintenanceCost}" Header="Maintenance" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Place}" Header="Place" Width="*" />
+                        </DataGrid.Columns>
+                        <DataGrid.DataContext>
+                            <Views:AnimalView/>
+                        </DataGrid.DataContext>
+                    </DataGrid>
+                    <DataGrid x:Name="dataGridFoods" Grid.Column="1" Margin="10,100,10,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" MouseLeftButtonUp="DataGridFoods_MouseLeftButtonUp" SelectionChanged="DataGridFoods_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Food" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Amount}" Header="Amount [Kg]" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="40" Width="40" Click="ButtonRefreshAnimals_Click" Cursor="Hand" BorderBrush="White">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/ZooManager;component/Images/refreshButton.png"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Setter Property="Control.BorderThickness" Value="5,5,5,5" />
+                                        <Setter Property="Control.BorderBrush" Value="#66FF3300" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="buttonAddFood" Content="Add food" Grid.Column="1" Margin="10,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonAddFood_Click" HorizontalAlignment="Left" Width="134"/>
+                    <Button x:Name="buttonModifyFood" Content="Modify food" Grid.Column="1" Margin="149,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonModifyFoodCount_Click" HorizontalAlignment="Left" Width="115" IsEnabled="False"/>
+                    <Button x:Name="buttonRemoveFood" Content="Remove food" Grid.Column="1" Margin="269,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonRemoveFood_Click" HorizontalAlignment="Left" Width="111" IsEnabled="False"/>
+                    <Button x:Name="buttonAddAnimal" Content="Add animal" Grid.Column="1" Margin="55,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonAddAnimal_Click" HorizontalAlignment="Left" Width="89"/>
+                    <Button x:Name="buttonModifyAnimal" Content="Modify animal" Grid.Column="1" Margin="149,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonModifyAnimal_Click" HorizontalAlignment="Left" Width="115" IsEnabled="False"/>
+                    <Button x:Name="buttonRemoveAnimal" Content="Remove animal" Grid.Column="1" Margin="269,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonRemoveAnimal_Click" HorizontalAlignment="Left" Width="111" IsEnabled="False"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabWorkers" Header="Workers">
+                <Grid Background="#FFE5E5E5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="dataGridWorkers" Margin="10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="DataGridWorkers_SelectionChanged" MouseLeftButtonUp="DataGridWorkers_MouseLeftButtonUp">
+                        <DataGrid.DataContext>
+                            <Views:WorkerView/>
+                        </DataGrid.DataContext>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Surname}" Header="Surname" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Age}" Header="Age" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy\}}" Header="Hire Date" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Place}" Header="Work Place" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="40" Width="40" Cursor="Hand" BorderBrush="White" Click="ButtonRefreshWorkers_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/ZooManager;component/Images/refreshButton.png"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Setter Property="Control.BorderThickness" Value="5,5,5,5" />
+                                        <Setter Property="Control.BorderBrush" Value="#66FF3300" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="buttonAddWorker" Content="Add worker" Grid.Column="1" Margin="55,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonAddWorker_Click" HorizontalAlignment="Left" Width="148"/>
+                    <DataGrid x:Name="dataGridOvertimes" Grid.Column="1" Margin="10,134,10,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single">
+                        <DataGrid.DataContext>
+                            <Views:OvertimeView/>
+                        </DataGrid.DataContext>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Header="Submit Date" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Hours}" Header="Hours" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding PaymentPercentage, StringFormat=\{0\}%}" Header="Salary modifier" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Employee}" Header="Employee" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="buttonSubmitOvertime" Content="Submit overtime" Grid.Column="1" Margin="10,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Width="193" Click="ButtonSubmitOvertime_Click" IsEnabled="False"/>
+                    <Label Content="Overtimes" Grid.Column="1" Margin="10,100,10,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+                    <Button x:Name="buttonRemoveWorker" Content="Remove worker" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="208,55,0,0" VerticalAlignment="Top" Width="172" FontWeight="Bold" FontSize="14" Click="ButtonRemoveWorker_Click" IsEnabled="False"/>
+                    <Button x:Name="buttonModifyWorker" Content="Modify worker" Grid.Column="1" Margin="208,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Width="172" Click="ButtonModifyWorker_Click" IsEnabled="False"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Cash balance">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="dataGridCashBalances" Margin="10,10,0,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" HorizontalAlignment="Left" Width="370">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding SubmitDate, StringFormat=\{0:dd.MM.yyyy\}}" Header="Submit Date" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Money}" Header="Money" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding DetailedDescription}" Header="Description" Width="*" />
+                        </DataGrid.Columns>
+                        <DataGrid.DataContext>
+                            <Views:CashBalanceView/>
+                        </DataGrid.DataContext>
+                    </DataGrid>
+                    <Button Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="40" Width="40" Click="ButtonRefreshCash_Click" Cursor="Hand" BorderBrush="White">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/ZooManager;component/Images/refreshButton.png"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Setter Property="Control.BorderThickness" Value="5,5,5,5" />
+                                        <Setter Property="Control.BorderBrush" Value="#66FF3300" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="buttonAddOperation" Content="Add new finance operation" Grid.Column="1" Margin="55,10,10,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonAddOperation_Click"/>
+                    <Button x:Name="buttonPayMonthSalary" Content="Pay workers month salary" Grid.Column="1" Margin="10,55,10,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonPayMonthSalary_Click"/>
+                    <Image Grid.Column="1" HorizontalAlignment="Left" Height="244" Margin="10,143,0,0" VerticalAlignment="Top" Width="370" Source="/ZooManager;component/Images/cash.png"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Places">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="dataGridPlaces" Margin="10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" MouseLeftButtonUp="DataGridPlaces_MouseLeftButtonUp" SelectionChanged="DataGridPlaces_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Place" Width="*" />
+                            <DataGridTextColumn Binding="{Binding OpenTime}" Header="Open Time" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding CloseTime}" Header="Close Time" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding MaintenanceCost}" Header="Maintenance" Width="Auto">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid x:Name="dataGridAttractions" Grid.Column="1" Margin="10,100,10,10" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="DataGridAttractions_SelectionChanged" MouseLeftButtonUp="DataGridAttractions_MouseLeftButtonUp">
+                        <DataGrid.DataContext>
+                            <Views:AttractionView/>
+                        </DataGrid.DataContext>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Attraction" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Place}" Header="Place" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding AttractionManager}" Header="Manager" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Description}" Header="Description" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="40" Width="40" Click="ButtonRefreshPlaces_Click" Cursor="Hand" BorderBrush="White">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/ZooManager;component/Images/refreshButton.png"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Setter Property="Control.BorderThickness" Value="5,5,5,5" />
+                                        <Setter Property="Control.BorderBrush" Value="#66FF3300" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="buttonAddPlace" Content="Create place" Grid.Column="1" Margin="55,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonAddPlace_Click" HorizontalAlignment="Left" Width="103"/>
+                    <Button x:Name="buttonModifyPlace" Content="Modify place" Grid.Column="1" Margin="163,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonModifyPlace_Click" HorizontalAlignment="Left" Width="101" IsEnabled="False"/>
+                    <Button x:Name="buttonRemovePlace" Content="Remove place" Grid.Column="1" Margin="269,10,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" Click="ButtonRemovePlace_Click" HorizontalAlignment="Left" Width="111" IsEnabled="False"/>
+                    <Button x:Name="buttonAddAttraction" Content="Add attraction" Grid.Column="1" Margin="10,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Width="103" Click="ButtonAddAttraction_Click"/>
+                    <Button x:Name="buttonModifyAttraction" Content="Change attraction" Grid.Column="1" Margin="118,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Width="126" IsEnabled="False" Click="ButtonModifyAttraction_Click"/>
+                    <Button x:Name="buttonRemoveAttraction" Content="Remove attraction" Grid.Column="1" Margin="249,55,0,0" VerticalAlignment="Top" Height="40" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Width="131" IsEnabled="False" Click="ButtonRemoveAttraction_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

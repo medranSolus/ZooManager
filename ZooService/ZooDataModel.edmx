@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ZooDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="Count" Type="int" />
+          <Property Name="MaintenanceCost" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="PlaceID" Type="int" Nullable="false" />
+          <Property Name="FoodID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attractions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="AttractionManagerID" Type="int" Nullable="false" />
+          <Property Name="PlaceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BalanceTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="63" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CashBalances">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubmitDate" Type="date" />
+          <Property Name="Money" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="BalanceTypeID" Type="int" Nullable="false" />
+          <Property Name="DetailedDescription" Type="nvarchar" MaxLength="63" />
+        </EntityType>
+        <EntityType Name="Foods">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="Amount" Type="float" />
+        </EntityType>
+        <EntityType Name="Overtimes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Hours" Type="int" Nullable="false" />
+          <Property Name="PaymentPercentage" Type="int" Nullable="false" />
+          <Property Name="WorkerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Places">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="OpenTime" Type="time" Precision="0" />
+          <Property Name="CloseTime" Type="time" Precision="0" />
+          <Property Name="MaintenanceCost" Type="decimal" Precision="19" Scale="2" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="63" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="PlaceID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Animals__FoodID__5535A963">
+          <End Role="Foods" Type="Self.Foods" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Foods">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Animals__PlaceID__5441852A">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__Attra__5812160E">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="AttractionManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__Place__59063A47">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashBalan__Balan__3B75D760">
+          <End Role="BalanceTypes" Type="Self.BalanceTypes" Multiplicity="1" />
+          <End Role="CashBalances" Type="Self.CashBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BalanceTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashBalances">
+              <PropertyRef Name="BalanceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Overtimes__Worke__4AB81AF0">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="Overtimes" Type="Self.Overtimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Overtimes">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workers__PlaceID__47DBAE45">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZooDataModelStoreContainer">
+          <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attractions" EntityType="Self.Attractions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BalanceTypes" EntityType="Self.BalanceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashBalances" EntityType="Self.CashBalances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Foods" EntityType="Self.Foods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Overtimes" EntityType="Self.Overtimes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Places" EntityType="Self.Places" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Animals__FoodID__5535A963" Association="Self.FK__Animals__FoodID__5535A963">
+            <End Role="Foods" EntitySet="Foods" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animals__PlaceID__5441852A" Association="Self.FK__Animals__PlaceID__5441852A">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__Attra__5812160E" Association="Self.FK__Attractio__Attra__5812160E">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__Place__59063A47" Association="Self.FK__Attractio__Place__59063A47">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashBalan__Balan__3B75D760" Association="Self.FK__CashBalan__Balan__3B75D760">
+            <End Role="BalanceTypes" EntitySet="BalanceTypes" />
+            <End Role="CashBalances" EntitySet="CashBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Overtimes__Worke__4AB81AF0" Association="Self.FK__Overtimes__Worke__4AB81AF0">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Overtimes" EntitySet="Overtimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workers__PlaceID__47DBAE45" Association="Self.FK__Workers__PlaceID__47DBAE45">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZooDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="MaintenanceCost" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="PlaceID" Type="Int32" Nullable="false" />
+          <Property Name="FoodID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Food" Relationship="Self.FK__Animals__FoodID__5535A963" FromRole="Animals" ToRole="Foods" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Animals__PlaceID__5441852A" FromRole="Animals" ToRole="Places" />
+        </EntityType>
+        <EntityType Name="Attraction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AttractionManagerID" Type="Int32" Nullable="false" />
+          <Property Name="PlaceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK__Attractio__Attra__5812160E" FromRole="Attractions" ToRole="Workers" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Attractio__Place__59063A47" FromRole="Attractions" ToRole="Places" />
+        </EntityType>
+        <EntityType Name="BalanceType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CashBalances" Relationship="Self.FK__CashBalan__Balan__3B75D760" FromRole="BalanceTypes" ToRole="CashBalances" />
+        </EntityType>
+        <EntityType Name="CashBalance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubmitDate" Type="DateTime" Precision="0" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="BalanceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="DetailedDescription" Type="String" MaxLength="63" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BalanceType" Relationship="Self.FK__CashBalan__Balan__3B75D760" FromRole="CashBalances" ToRole="BalanceTypes" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Double" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK__Animals__FoodID__5535A963" FromRole="Foods" ToRole="Animals" />
+        </EntityType>
+        <EntityType Name="Overtime">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hours" Type="Int32" Nullable="false" />
+          <Property Name="PaymentPercentage" Type="Int32" Nullable="false" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK__Overtimes__Worke__4AB81AF0" FromRole="Overtimes" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OpenTime" Type="Time" Precision="0" />
+          <Property Name="CloseTime" Type="Time" Precision="0" />
+          <Property Name="MaintenanceCost" Type="Decimal" Precision="19" Scale="2" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK__Animals__PlaceID__5441852A" FromRole="Places" ToRole="Animals" />
+          <NavigationProperty Name="Attractions" Relationship="Self.FK__Attractio__Place__59063A47" FromRole="Places" ToRole="Attractions" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK__Workers__PlaceID__47DBAE45" FromRole="Places" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="PlaceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Attractions" Relationship="Self.FK__Attractio__Attra__5812160E" FromRole="Workers" ToRole="Attractions" />
+          <NavigationProperty Name="Overtimes" Relationship="Self.FK__Overtimes__Worke__4AB81AF0" FromRole="Workers" ToRole="Overtimes" />
+          <NavigationProperty Name="Place" Relationship="Self.FK__Workers__PlaceID__47DBAE45" FromRole="Workers" ToRole="Places" />
+        </EntityType>
+        <Association Name="FK__Animals__FoodID__5535A963">
+          <End Role="Foods" Type="Self.Food" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Foods">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Animals__PlaceID__5441852A">
+          <End Role="Places" Type="Self.Place" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__Attra__5812160E">
+          <End Role="Workers" Type="Self.Worker" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="AttractionManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__Place__59063A47">
+          <End Role="Places" Type="Self.Place" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashBalan__Balan__3B75D760">
+          <End Role="BalanceTypes" Type="Self.BalanceType" Multiplicity="1" />
+          <End Role="CashBalances" Type="Self.CashBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BalanceTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashBalances">
+              <PropertyRef Name="BalanceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Overtimes__Worke__4AB81AF0">
+          <End Role="Workers" Type="Self.Worker" Multiplicity="1" />
+          <End Role="Overtimes" Type="Self.Overtime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Overtimes">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workers__PlaceID__47DBAE45">
+          <End Role="Places" Type="Self.Place" Multiplicity="1" />
+          <End Role="Workers" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZooContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animals" EntityType="Self.Animal" />
+          <EntitySet Name="Attractions" EntityType="Self.Attraction" />
+          <EntitySet Name="BalanceTypes" EntityType="Self.BalanceType" />
+          <EntitySet Name="CashBalances" EntityType="Self.CashBalance" />
+          <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="Overtimes" EntityType="Self.Overtime" />
+          <EntitySet Name="Places" EntityType="Self.Place" />
+          <EntitySet Name="Workers" EntityType="Self.Worker" />
+          <AssociationSet Name="FK__Animals__FoodID__5535A963" Association="Self.FK__Animals__FoodID__5535A963">
+            <End Role="Foods" EntitySet="Foods" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animals__PlaceID__5441852A" Association="Self.FK__Animals__PlaceID__5441852A">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__Attra__5812160E" Association="Self.FK__Attractio__Attra__5812160E">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__Place__59063A47" Association="Self.FK__Attractio__Place__59063A47">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashBalan__Balan__3B75D760" Association="Self.FK__CashBalan__Balan__3B75D760">
+            <End Role="BalanceTypes" EntitySet="BalanceTypes" />
+            <End Role="CashBalances" EntitySet="CashBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Overtimes__Worke__4AB81AF0" Association="Self.FK__Overtimes__Worke__4AB81AF0">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Overtimes" EntitySet="Overtimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workers__PlaceID__47DBAE45" Association="Self.FK__Workers__PlaceID__47DBAE45">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZooDataModelStoreContainer" CdmEntityContainer="ZooContext">
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="ZooDataModel.Animal">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="MaintenanceCost" ColumnName="MaintenanceCost" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attractions">
+            <EntityTypeMapping TypeName="ZooDataModel.Attraction">
+              <MappingFragment StoreEntitySet="Attractions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AttractionManagerID" ColumnName="AttractionManagerID" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BalanceTypes">
+            <EntityTypeMapping TypeName="ZooDataModel.BalanceType">
+              <MappingFragment StoreEntitySet="BalanceTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashBalances">
+            <EntityTypeMapping TypeName="ZooDataModel.CashBalance">
+              <MappingFragment StoreEntitySet="CashBalances">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="BalanceTypeID" ColumnName="BalanceTypeID" />
+                <ScalarProperty Name="DetailedDescription" ColumnName="DetailedDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="ZooDataModel.Food">
+              <MappingFragment StoreEntitySet="Foods">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Overtimes">
+            <EntityTypeMapping TypeName="ZooDataModel.Overtime">
+              <MappingFragment StoreEntitySet="Overtimes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="PaymentPercentage" ColumnName="PaymentPercentage" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="ZooDataModel.Place">
+              <MappingFragment StoreEntitySet="Places">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+                <ScalarProperty Name="MaintenanceCost" ColumnName="MaintenanceCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="ZooDataModel.Worker">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

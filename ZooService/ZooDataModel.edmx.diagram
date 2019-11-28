@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57deb73ed8cf47b0856f9a085cab29c3" Name="Diagram1">
+        <EntityTypeShape EntityType="ZooDataModel.Animal" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.Attraction" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.BalanceType" Width="1.5" PointX="2.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.CashBalance" Width="1.5" PointX="5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.Food" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.Overtime" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.Place" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZooDataModel.Worker" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <AssociationConnector Association="ZooDataModel.FK__Animals__FoodID__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__Animals__PlaceID__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__Attractio__Attra__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__Attractio__Place__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__CashBalan__Balan__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__Overtimes__Worke__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="ZooDataModel.FK__Workers__PlaceID__47DBAE45" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooManager", "ZooManager\ZooManager.csproj", "{4A390ADE-EDDA-4C72-94A1-77B9E04F2CAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{68F913BC-1233-4030-A05C-0172CDF6CD45} = {68F913BC-1233-4030-A05C-0172CDF6CD45}
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0} = {399323CE-777A-4373-AF4A-2BC3478BF6A0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooCom", "ZooCom\ZooCom.csproj", "{399323CE-777A-4373-AF4A-2BC3478BF6A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooService", "ZooService\ZooService.csproj", "{68F913BC-1233-4030-A05C-0172CDF6CD45}"
+	ProjectSection(ProjectDependencies) = postProject
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0} = {399323CE-777A-4373-AF4A-2BC3478BF6A0}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A390ADE-EDDA-4C72-94A1-77B9E04F2CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A390ADE-EDDA-4C72-94A1-77B9E04F2CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A390ADE-EDDA-4C72-94A1-77B9E04F2CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A390ADE-EDDA-4C72-94A1-77B9E04F2CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399323CE-777A-4373-AF4A-2BC3478BF6A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68F913BC-1233-4030-A05C-0172CDF6CD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68F913BC-1233-4030-A05C-0172CDF6CD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68F913BC-1233-4030-A05C-0172CDF6CD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68F913BC-1233-4030-A05C-0172CDF6CD45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B88EC1B3-E8F3-4F4D-84ED-D464CDAE7553}
+	EndGlobalSection
+EndGlobal

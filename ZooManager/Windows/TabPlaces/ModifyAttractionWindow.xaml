@@ -1,0 +1,20 @@
+﻿<Window x:Class="ZooManager.Windows.TabPlaces.ModifyAttractionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Modify attraction" Height="226" Width="340" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True">
+    <Grid>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="10,0,0,161" FontWeight="Bold" Height="26" VerticalAlignment="Bottom"/>
+        <Label Content="Description:" HorizontalAlignment="Left" Margin="10,0,0,130" FontWeight="Bold" Height="26" VerticalAlignment="Bottom"/>
+        <TextBox Name="textBoxName" HorizontalAlignment="Left" Margin="57,0,0,161" TextWrapping="Wrap" Text="" Width="120" Height="23" VerticalAlignment="Bottom"/>
+        <Button Content="Add new attraction" Margin="182,0,10,10" FontWeight="Bold" Click="Button_Click" Height="20" VerticalAlignment="Bottom"/>
+        <DataGrid x:Name="dataGridPlaces" Margin="182,0,10,35" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" Height="149" VerticalAlignment="Bottom">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Place" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox Name="textBoxDescription" Margin="10,0,157,10" TextWrapping="Wrap" Text="" Height="120" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
