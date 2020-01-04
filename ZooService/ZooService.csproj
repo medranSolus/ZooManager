@@ -138,6 +138,6 @@
   </Target>
   <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(SolutionDir)ZooService\bin\Debug" "$(SolutionDir)ZooManager\bin\Debug\" /S /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(SolutionDir)ZooService\bin\$(ConfigurationName)" "$(SolutionDir)ZooManager\$(OutDir)" /S /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

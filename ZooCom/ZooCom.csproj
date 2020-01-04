@@ -57,7 +57,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(SolutionDir)ZooCom\bin\Debug" "$(SolutionDir)ZooManager\bin\Debug\" /S /Y
-XCOPY "$(SolutionDir)ZooCom\bin\Debug" "$(SolutionDir)ZooService\bin\Debug\" /S /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(SolutionDir)ZooCom\bin\$(ConfigurationName)" "$(SolutionDir)ZooManager\$(OutDir)" /S /Y
+XCOPY "$(SolutionDir)ZooCom\bin\$(ConfigurationName)" "$(SolutionDir)ZooService\$(OutDir)" /S /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
