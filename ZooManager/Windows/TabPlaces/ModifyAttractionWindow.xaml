@@ -9,7 +9,7 @@
         <Label Content="Name:" HorizontalAlignment="Left" Margin="10,0,0,161" FontWeight="Bold" Height="26" VerticalAlignment="Bottom"/>
         <Label Content="Description:" HorizontalAlignment="Left" Margin="10,0,0,130" FontWeight="Bold" Height="26" VerticalAlignment="Bottom"/>
         <TextBox Name="textBoxName" HorizontalAlignment="Left" Margin="57,0,0,161" TextWrapping="Wrap" Text="" Width="120" Height="23" VerticalAlignment="Bottom"/>
-        <Button Content="Add new attraction" Margin="182,0,10,10" FontWeight="Bold" Click="Button_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Button Content="Save changes" Margin="182,0,10,10" FontWeight="Bold" Click="Button_Click" Height="20" VerticalAlignment="Bottom"/>
         <DataGrid x:Name="dataGridPlaces" Margin="182,0,10,35" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" Height="149" VerticalAlignment="Bottom">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Place" Width="Auto"/>

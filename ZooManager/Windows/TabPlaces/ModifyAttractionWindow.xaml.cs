@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Linq;
 
 namespace ZooManager.Windows.TabPlaces
 {
@@ -19,7 +20,13 @@ namespace ZooManager.Windows.TabPlaces
             parentWindow = parent;
             dataGridPlaces.DataContext = parentWindow.ZooConnection.GetModelType(ModelType.Place);
             lock (parentWindow.Places)
+            {
                 dataGridPlaces.ItemsSource = parentWindow.Places;
+                int id = (int)ZooClient.GetProperty(attraction, "PlaceID");
+                dataGridPlaces.SelectedItem = parentWindow.Places.FirstOrDefault(place => (int)ZooClient.GetProperty(place, "ID") == id);
+            }
+            textBoxName.Text = (string)ZooClient.GetProperty(attraction, "Name");
+            textBoxDescription.Text = (string)ZooClient.GetProperty(attraction, "Description");
         }
 
         void Button_Click(object sender, RoutedEventArgs e)

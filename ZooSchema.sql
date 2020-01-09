@@ -167,15 +167,16 @@ BEGIN
 	SET @CurrentMonth = DATEPART(m, DATEADD(m, -1, GETDATE()));
 	DECLARE @CurrentYear INT;
 	SET @CurrentYear = DATEPART(yyyy, DATEADD(m, -1, GETDATE()));
-	INSERT INTO CashBalances(Money, BalanceTypeID, DetailedDescription)
-	SELECT
-		Workers.Salary + 
-		ISNULL((SELECT SUM(Overtimes.Hours * Overtimes.PaymentPercentage)
-				FROM Overtimes 
-				Where Overtimes.WorkerID = Workers.ID AND DATEPART(yyyy, Overtimes.Date) = @CurrentYear AND DATEPART(m, Overtimes.Date) = @CurrentMonth) * Workers.Salary / 160, 0),
-		6,
-		Workers.Name + ' ' + Workers.Surname 
-	FROM Workers;
+	IF NOT EXISTS(SELECT ID FROM CashBalances WHERE DATEPART(m, DATEADD(m, -1, SubmitDate)) = @CurrentMonth AND BalanceTypeID = 6 AND DATEPART(yyyy, DATEADD(m, -1, SubmitDate)) = @CurrentYear)
+		INSERT INTO CashBalances(Money, BalanceTypeID, DetailedDescription)
+		SELECT
+			Workers.Salary + 
+			ISNULL((SELECT SUM(Overtimes.Hours * Overtimes.PaymentPercentage)
+					FROM Overtimes 
+					Where Overtimes.WorkerID = Workers.ID AND DATEPART(yyyy, Overtimes.Date) = @CurrentYear AND DATEPART(m, Overtimes.Date) = @CurrentMonth) * Workers.Salary / 160, 0),
+			6,
+			Workers.Name + ' ' + Workers.Surname 
+		FROM Workers;
 END;
 GO
 
