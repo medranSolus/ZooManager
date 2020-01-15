@@ -39,7 +39,7 @@ namespace ZooService
             return false;
         }
 
-        public bool AddModel<T>(T model) where T : ZooDataModel
+        public virtual bool AddModel<T>(T model) where T : ZooDataModel
         {
             try
             {
@@ -172,7 +172,7 @@ namespace ZooService
             return new Tuple<bool, byte>(success, (byte)ModelType.Model);
         }
 
-        public List<T> GetModels<T>() where T : ZooDataModel
+        public virtual List<T> GetModels<T>() where T : ZooDataModel
         {
             return new List<T>(Set<T>());
         }

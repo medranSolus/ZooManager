@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace ZooService
 {
-    public enum ModelType { Model = 0, Animal = 1, Attraction = 2, BalanceType = 4, CashBalance = 8, Food = 16, Overtime = 32, Place = 64, Worker = 128 }
+    public enum ModelType { Model = 0, Animal = 1, Attraction = 2, BalanceType = 4, CashBalance = 8, Food = 16, Overtime = 32, Place = 64, Worker = 128}
 
     public class ZooService
     {
@@ -49,7 +49,7 @@ namespace ZooService
             }
         }
 
-        public void Start()
+        public virtual void Start()
         {
             serverModifyModel = new TcpListener(localIp, tcpPort + 3);
             serverAddModel = new TcpListener(localIp, tcpPort + 2);
@@ -184,12 +184,12 @@ namespace ZooService
             threadGetModels.Start();
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             isServerRunning = false;
         }
 
-        bool ModifyModel(ZooContext context, ModelType type, ZooDataModel model)
+        public virtual bool ModifyModel(ZooContext context, ModelType type, ZooDataModel model)
         {
             switch (type)
             {
@@ -214,7 +214,7 @@ namespace ZooService
             }
         }
 
-        bool AddModel(ZooContext context, ModelType type, ZooDataModel model)
+        public virtual bool AddModel(ZooContext context, ModelType type, ZooDataModel model)
         {
             switch (type)
             {
@@ -245,8 +245,8 @@ namespace ZooService
                     return false;
             }
         }
-        
-        Tuple<bool, byte> DeleteModel(ZooContext context, ModelType type, int id)
+
+        public virtual Tuple<bool, byte> DeleteModel(ZooContext context, ModelType type, int id)
         {
             switch (type)
             {
@@ -265,7 +265,7 @@ namespace ZooService
             }
         }
 
-        List<ZooDataModel> GetModels(ZooContext context, ModelType type)
+        public virtual List<ZooDataModel> GetModels(ZooContext context, ModelType type)
         {
             switch (type)
             {
@@ -290,12 +290,12 @@ namespace ZooService
             }
         }
 
-        object GetProperty(object model, string name)
+        public virtual object GetProperty(object model, string name)
         {
             return model.GetType().GetProperty(name).GetValue(model);
         }
 
-        ZooDataModel ConvertFromZooComModel(object model, ModelType type)
+        public virtual ZooDataModel ConvertFromZooComModel(object model, ModelType type)
         {
             switch (type)
             {
@@ -375,7 +375,7 @@ namespace ZooService
             }
         }
 
-        object ConvertToZooComModel(ModelType type, ZooDataModel model)
+        public virtual object ConvertToZooComModel(ModelType type, ZooDataModel model)
         {
             object comModel = Activator.CreateInstance(modelTypes[type]);
             SetProperty(comModel, "ID", model.ID);
@@ -457,12 +457,12 @@ namespace ZooService
             return comModel;
         }
 
-        void SetProperty(object model, string name, object value)
+        public virtual void SetProperty(object model, string name, object value)
         {
             model.GetType().GetProperty(name).SetValue(model, value);
         }
 
-        void PayMonthSalary()
+        public virtual void PayMonthSalary()
         {
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ZooContextMonthSalary"].ConnectionString))
             using (SqlCommand command = new SqlCommand("EXEC CreateMonthPayment", connection))
