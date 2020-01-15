@@ -70,7 +70,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddModelTest.cs" />
+    <Compile Include="ConvertFromZooComModelTest.cs" />
+    <Compile Include="ConvertToZooComModelTest.cs" />
     <Compile Include="DeleteModelTest.cs" />
+    <Compile Include="GetModelsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

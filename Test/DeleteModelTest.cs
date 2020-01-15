@@ -7,28 +7,43 @@ namespace Test
     [TestClass]
     public class DeleteModelTest
     {
+        MockSequence ctxSeq;
+        Mock<ZooContext> ctx;
+        ZooService.ZooService service;
+
         [TestInitialize]
         public void Setup()
         {
+            ctxSeq = new MockSequence();
+            ctx = new Mock<ZooContext>();
+            ctx.Setup(x => x.DeleteWorker(2)).Returns(new System.Tuple<bool, byte>(false, (byte)ModelType.Attraction));
+            ctx.InSequence(ctxSeq).Setup(x => x.DeleteAttraction(1)).Returns(new System.Tuple<bool, byte>(true, 0));
+            ctx.InSequence(ctxSeq).Setup(x => x.DeleteWorker(2)).Returns(new System.Tuple<bool, byte>(true, 0));
+
+            service = new ZooService.ZooService(1111);
         }
 
         [TestMethod]
-        public void Check_if_worker_is_not_assigned_to_attraction()
-        {//https://riptutorial.com/moq/example/23018/validating-call-order-with-mocksequence
-            var seq = new MockSequence();
-            var context = new Mock<ZooContext>();
-            context.Setup(ctx => ctx.DeleteWorker(2)).Returns(new System.Tuple<bool, byte>(false, (byte)ModelType.Animal));
-            context.Setup(ctx => ctx.DeleteAttraction(1)).Returns(new System.Tuple<bool, byte>(true, 0));
-            //context.InSequence(seq).Setup(x => x.DeleteAttraction(1));
-            //context.InSequence(seq).Setup(x => x.DeleteWorker(2));
-
-            context.Object.DeleteAttraction(1);
-            var ret = context.Object.DeleteWorker(2);
+        public void Delete_worker_before_attraction_fail()
+        {
+            var ret = service.DeleteModel(ctx.Object, ModelType.Worker, 2);
             Assert.IsFalse(ret.Item1);
-            Assert.IsTrue(ret.Item2 == (byte)ModelType.Animal);
+            Assert.IsTrue(ret.Item2 == (byte)ModelType.Attraction);
+        }
 
-            context.Verify(x => x.DeleteAttraction(1));
-            context.Verify(x => x.DeleteWorker(2));
+        [TestMethod]
+        public void Delete_worker_after_deleting_his_attraction()
+        {
+            var ret1 = service.DeleteModel(ctx.Object, ModelType.Attraction, 1);
+            Assert.IsTrue(ret1.Item1);
+            Assert.IsTrue(ret1.Item2 == 0);
+
+            var ret2 = service.DeleteModel(ctx.Object, ModelType.Worker, 2);
+            Assert.IsTrue(ret2.Item1);
+            Assert.IsTrue(ret2.Item2 == 0);
+
+            ctx.Verify(x => x.DeleteAttraction(1));
+            ctx.Verify(x => x.DeleteWorker(2));
         }
     }
 }

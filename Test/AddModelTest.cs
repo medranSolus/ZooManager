@@ -1,29 +1,24 @@
 ﻿using Moq;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooService;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConsoleDemoTest
+namespace Test
 {
-    [TestFixture]
-    class AddModel
+    [TestClass]
+    public class AddModelTest
     {
 
         Mock<ZooContext> IZooContext;
         ZooService.ZooService service;
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             IZooContext = new Mock<ZooContext>();
             service = new ZooService.ZooService(1111);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_add_object()
         {
             Animal unit = new Animal()
@@ -43,7 +38,7 @@ namespace ConsoleDemoTest
             Assert.IsTrue(response);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_return_false_on_non_existing_method()
         {
             Animal unit = new Animal()

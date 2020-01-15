@@ -32,7 +32,7 @@ namespace ZooService
 
         public ZooService(int port)
         {
-            zooComDll = Assembly.LoadFile($@"{AppDomain.CurrentDomain.BaseDirectory}ZooCom.dll");
+            zooComDll = Assembly.LoadFile($@"D:\Projects\Visual Studio Projects\ZooManager\Test\bin\Release\ZooCom.dll");
             foreach (ModelType type in (ModelType[])Enum.GetValues(typeof(ModelType)))
             {
                 modelTypes[type] = zooComDll.GetType($"ZooCom.Model.{Enum.GetName(typeof(ModelType), type)}");
@@ -377,6 +377,8 @@ namespace ZooService
 
         public virtual object ConvertToZooComModel(ModelType type, ZooDataModel model)
         {
+            if (ModelType.Model == type)
+                return null;
             object comModel = Activator.CreateInstance(modelTypes[type]);
             SetProperty(comModel, "ID", model.ID);
             switch (type)
@@ -451,8 +453,6 @@ namespace ZooService
                         SetProperty(comModel, "PlaceID", worker.PlaceID);
                     }
                     break;
-                default:
-                    return null;
             }
             return comModel;
         }

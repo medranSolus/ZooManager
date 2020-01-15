@@ -1,52 +1,53 @@
-﻿using Moq;
-using NUnit.Framework;
+﻿using ZooService;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooService;
 
-namespace ConsoleDemoTest
+namespace Test
 {
-    [TestFixture]
-    class ConvertFromZooComModel
+    [TestClass]
+    public class ConvertFromZooComModelTest
     {
-
         ZooService.ZooService service;
+        Animal animalUnit;
         object comModel;
 
         const int ID = 1;
         const decimal decimalTest = 5;
         const string stringTest = "testString";
-        const int intTest= 50;
-
-        Animal animalUnit;
-        
-        [SetUp]
+        const int intTest = 50;
+                
+        [TestInitialize]
         public void SetUp()
         {
             service = new ZooService.ZooService(1111);
 
-            animalUnit = new Animal();
-            animalUnit.ID = ID;
-            animalUnit.MaintenanceCost = decimalTest;
-            animalUnit.Name = stringTest;
-            animalUnit.PlaceID = ID;
-            animalUnit.FoodID = ID;
-            animalUnit.Count = intTest;
+            comModel = new ZooCom.Model.Animal
+            {
+                ID = ID,
+                MaintenanceCost = decimalTest,
+                Name = stringTest,
+                PlaceID = ID,
+                FoodID = ID,
+                Count = intTest
+            };
 
-            ZooDataModel model = (ZooDataModel)animalUnit;
-
-            comModel = service.ConvertFromZooComModel(model, ZooService.ModelType.Animal);
+            animalUnit = new Animal
+            {
+                ID = ID,
+                MaintenanceCost = decimalTest,
+                Name = stringTest,
+                PlaceID = ID,
+                FoodID = ID,
+                Count = intTest
+            };
         }
 
-        [Test]
+        [TestMethod]
         public void Has_the_same_fields_values_after_conversion()
         {
             var objectResponse = service.ConvertFromZooComModel(comModel, ZooService.ModelType.Animal);
 
-            Assert.IsInstanceOf(objectResponse.GetType(), objectResponse);
+            Assert.IsInstanceOfType(objectResponse, animalUnit.GetType());
             Animal animalObjectAfterConvertion = (Animal)objectResponse;
 
             Assert.AreEqual(animalObjectAfterConvertion.ID, ID);
@@ -58,7 +59,7 @@ namespace ConsoleDemoTest
             Assert.AreNotSame(animalUnit, animalObjectAfterConvertion);
         }
 
-        [Test]
+        [TestMethod]
         public void Returns_NULL()
         {
             var response = service.ConvertFromZooComModel(comModel, ZooService.ModelType.Model);
@@ -66,52 +67,50 @@ namespace ConsoleDemoTest
             Assert.IsNull(response);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_throw_Exception()
         {
-            ZooDataModel emptyObject = (ZooDataModel) new Animal();
+            ZooCom.Model.Animal emptyObject = null;
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Animal);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Attraction);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.BalanceType);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.CashBalance);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Food);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Overtime);
             });
-
-
-            Assert.Throws<NullReferenceException>(() =>
+            
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Place);
             });
 
-            Assert.Throws<NullReferenceException>(() =>
+            Assert.ThrowsException<NullReferenceException>(() =>
             {
                 service.ConvertFromZooComModel(emptyObject, ZooService.ModelType.Worker);
             });
         }
-
     }
 }

@@ -1,19 +1,18 @@
 ﻿using Moq;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using ZooService;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
-namespace ConsoleDemoTest
+namespace Test
 {
-    [TestFixture]
-    class GetModels
+    [TestClass]
+    public class GetModelsTest
     {
         ZooService.ZooService service;
         Mock<ZooContext> IZooContext;
         List<Animal> animals;
 
-        [SetUp]
+        [TestInitialize]
         public void SetUp()
         {
             IZooContext = new Mock<ZooContext>();
@@ -26,7 +25,7 @@ namespace ConsoleDemoTest
             animals.Add(animal);
         }
 
-        [Test]
+        [TestMethod]
         public void Returns_not_empty_list()
         {
             IZooContext.Setup(x => x.GetModels<Animal>()).Returns(animals);
@@ -34,11 +33,12 @@ namespace ConsoleDemoTest
             var models = service.GetModels(IZooContext.Object, ZooService.ModelType.Animal);
 
             Assert.IsTrue(models is List<ZooDataModel>);
-            Assert.IsNotEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count > 0);
 
         }
 
-        [Test]
+        [TestMethod]
         public void Returns_empty_list()
         {
             IZooContext.Setup(x => x.GetModels<Overtime>()).Returns(new List<Overtime>());
@@ -50,30 +50,34 @@ namespace ConsoleDemoTest
             IZooContext.Setup(x => x.GetModels<Food>()).Returns(new List<Food>());
 
             var models = service.GetModels(IZooContext.Object, ZooService.ModelType.Overtime);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.Place);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.Worker);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.Attraction);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.BalanceType);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.CashBalance);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
             models = service.GetModels(IZooContext.Object, ZooService.ModelType.Food);
-            CollectionAssert.IsEmpty(models);
+            Assert.IsTrue(models != null);
+            Assert.IsTrue(models.Count == 0);
 
         }
         
-        [Test]
+        [TestMethod]
         public void Returns_null()
         {
             var models = service.GetModels(IZooContext.Object, ZooService.ModelType.Model);
             Assert.IsNull(models);
         }
-
-        static void Main(string[] args)
-        { }
     }
 }
