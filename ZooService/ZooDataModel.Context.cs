@@ -57,7 +57,7 @@ namespace ZooService
             return false;
         }
 
-        public Tuple<bool, byte> DeleteAnimal(int id)
+        public virtual Tuple<bool, byte> DeleteAnimal(int id)
         {
             Animal animal = Animals.SingleOrDefault(a => a.ID == id);
             bool succes = false;
@@ -77,7 +77,7 @@ namespace ZooService
             return new Tuple<bool, byte>(succes, (byte)ModelType.Model);
         }
 
-        public Tuple<bool, byte> DeleteAttraction(int id)
+        public virtual Tuple<bool, byte> DeleteAttraction(int id)
         {
             Attraction attraction = Attractions.SingleOrDefault(a => a.ID == id);
             bool succes = false;
@@ -97,7 +97,7 @@ namespace ZooService
             return new Tuple<bool, byte>(succes, (byte)ModelType.Model);
         }
 
-        public Tuple<bool, byte> DeleteFood(int id)
+        public virtual Tuple<bool, byte> DeleteFood(int id)
         {
             Food food = Foods.SingleOrDefault(w => w.ID == id);
             bool success = false;
@@ -119,7 +119,7 @@ namespace ZooService
             return new Tuple<bool, byte>(success, (byte)ModelType.Model);
         }
 
-        public Tuple<bool, byte> DeletePlace(int id)
+        public virtual Tuple<bool, byte> DeletePlace(int id)
         {
             Place place = Places.SingleOrDefault(p => p.ID == id);
             byte errors = (byte)ModelType.Model;
@@ -149,7 +149,7 @@ namespace ZooService
             return new Tuple<bool, byte>(success, errors);
         }
 
-        public Tuple<bool, byte> DeleteWorker(int id)
+        public virtual Tuple<bool, byte> DeleteWorker(int id)
         {
             Worker worker = Workers.SingleOrDefault(w => w.ID == id);
             bool success = false;

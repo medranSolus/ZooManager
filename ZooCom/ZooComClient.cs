@@ -37,8 +37,7 @@ namespace ZooCom
                 return true;
             }
         }
-
-
+        
         public bool AddModel<T>(T model) where T : Model.Model
         {
             using (TcpClient tcpClient = Connect(tcpPort + 2))
