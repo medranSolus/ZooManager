@@ -1,0 +1,17 @@
+!path FitSharp\FitTesto.dll
+
+!|import |
+|FitTesto|
+|SetUp   |
+
+!|FitTesto.ConvertToZooComModelTest        |
+|Is_COM_MODEL_after_conversion             |
+|Has_same_ID_after_conversion              |
+|Has_same_PlaceID_after_conversion         |
+|Has_same_FoodID_after_conversion          |
+|Has_same_Count_after_conversion           |
+|Has_same_Name_after_conversion            |
+|Has_same_Maintenance_Cost_after_conversion|
+|Are_not_same_objects_after_conversion     |
+|Returns_NULL                              |
+|Should_throw_Exception                    |

@@ -1,0 +1,9 @@
+!path FitSharp\FitTesto.dll
+
+!|import |
+|FitTesto|
+|SetUp   |
+
+!|FitTesto.DeleteModelTest                  |
+|Delete_worker_before_attraction_fail       |
+|Delete_worker_after_deleting_his_attraction|

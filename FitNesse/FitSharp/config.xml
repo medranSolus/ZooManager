@@ -1,0 +1,13 @@
+<suiteConfig>
+  <Settings>
+    <Runner>fitnesse.fitserver.FitServer</Runner>
+  </Settings>
+
+  <System.AppDomainSetup>
+    <ConfigurationFile>FitTesto.dll.config</ConfigurationFile>
+  </System.AppDomainSetup>
+  <ApplicationUnderTest>
+    <addNamespace>FitTesto</addNamespace>
+    <addAssembly>FitSharp\FitTesto.dll</addAssembly>
+  </ApplicationUnderTest>
+</suiteConfig>

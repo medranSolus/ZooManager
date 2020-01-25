@@ -86,10 +86,6 @@
       <Project>{399323ce-777a-4373-af4a-2bc3478bf6a0}</Project>
       <Name>ZooCom</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZooManager\ZooManager.csproj">
-      <Project>{4a390ade-edda-4c72-94a1-77b9e04f2cad}</Project>
-      <Name>ZooManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZooService\ZooService.csproj">
       <Project>{68f913bc-1233-4030-a05c-0172cdf6cd45}</Project>
       <Name>ZooService</Name>

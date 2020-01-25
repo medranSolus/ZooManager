@@ -32,7 +32,7 @@ namespace ZooService
 
         public ZooService(int port)
         {
-            zooComDll = Assembly.LoadFile($@"D:\Projects\Visual Studio Projects\ZooManager\Test\bin\Release\ZooCom.dll");
+            zooComDll = Assembly.LoadFile($@"C:\Users\marek\Desktop\fit\FitSharp\ZooCom.dll");
             foreach (ModelType type in (ModelType[])Enum.GetValues(typeof(ModelType)))
             {
                 modelTypes[type] = zooComDll.GetType($"ZooCom.Model.{Enum.GetName(typeof(ModelType), type)}");
